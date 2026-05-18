@@ -1,7 +1,7 @@
 import { httpClient } from "@/lib/axios";
 import type { AxiosRequestConfig, Method } from "axios";
 
-const baseRequest = async <T>(
+export const apiRequest = async <T>(
   method: Method,
   url: string,
   payload?: unknown,
@@ -17,4 +17,4 @@ const baseRequest = async <T>(
   return data;
 };
 
-export default baseRequest;
+export default apiRequest;
