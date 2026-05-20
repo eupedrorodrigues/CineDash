@@ -13,7 +13,7 @@ export const useLogin = () => {
     mutationFn: (credentials: ILoginCredentials) => authLogin(credentials),
     onSuccess: ({ token }) => {
       login(token);
-      navigate({ to: "/" });
+      navigate({ to: "/dashboard" });
     },
     onError: (error: Error) => {
       console.error(error);

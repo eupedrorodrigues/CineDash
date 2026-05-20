@@ -1,8 +1,6 @@
-import type { IAuthLoginResponse, ILoginCredentials } from "@/types";
+import type { ILoginCredentials } from "@/types";
 
-export const authLogin = async (
-  data: ILoginCredentials,
-): Promise<IAuthLoginResponse> => {
+export const authLogin = async (data: ILoginCredentials) => {
   await new Promise((resolve) => setTimeout(resolve, 800));
 
   if (!data.email || data.password.length < 6) {

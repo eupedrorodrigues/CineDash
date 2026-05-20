@@ -14,7 +14,7 @@ import type { loginFormInputsProps } from "./types";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Loader } from "@/components/loader/loader";
+import { Loader } from "@/components/Loader/Loader";
 import { useLogin } from "../../hooks/useLogin";
 
 export const LoginForm = () => {
@@ -49,10 +49,7 @@ export const LoginForm = () => {
           name="username"
           render={({ field, fieldState }) => (
             <FormItem className="space-y-2">
-              <FormLabel
-                htmlFor="username"
-                className="text-sm font-medium"
-              >
+              <FormLabel htmlFor="username" className="text-sm font-medium">
                 Email
               </FormLabel>
 
@@ -66,7 +63,11 @@ export const LoginForm = () => {
                   autoCapitalize="none"
                   autoFocus
                   spellCheck={false}
-                  className={fieldState.error ? "border-destructive focus-visible:ring-destructive" : ""}
+                  className={
+                    fieldState.error
+                      ? "border-destructive focus-visible:ring-destructive"
+                      : ""
+                  }
                   required
                   {...field}
                 />
@@ -75,16 +76,13 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="password"
           render={({ field, fieldState }) => (
             <FormItem className="space-y-2">
-              <FormLabel
-                htmlFor="password"
-                className="text-sm font-medium"
-              >
+              <FormLabel htmlFor="password" className="text-sm font-medium">
                 Senha
               </FormLabel>
 
@@ -99,7 +97,11 @@ export const LoginForm = () => {
                     ref={field.ref}
                     autoComplete="current-password"
                     spellCheck={false}
-                    className={fieldState.error ? "border-destructive focus-visible:ring-destructive" : ""}
+                    className={
+                      fieldState.error
+                        ? "border-destructive focus-visible:ring-destructive"
+                        : ""
+                    }
                     required
                   />
                   <button
@@ -127,12 +129,7 @@ export const LoginForm = () => {
           </p>
         )}
 
-        <Button
-          className="w-full"
-          size="lg"
-          disabled={isPending}
-          type="submit"
-        >
+        <Button className="w-full" size="lg" disabled={isPending} type="submit">
           {isPending ? <Loader className="h-4 w-4 animate-spin mr-2" /> : null}
           Entrar
         </Button>
