@@ -1,13 +1,18 @@
 import { apiRequest } from "./index";
 import type {
   ITMDBResponse,
+  ITMDBMovieDetail,
   IFetchMoviesParams,
   ITMDBRequestParams,
 } from "@/types";
-import { mapTMDBToMovie } from "@/constants";
+import {
+  mapTMDBToMovie,
+  mapTMDBToMovieDetail,
+  TMDB_LANGUAGE,
+} from "@/constants";
 
-export const moviePopular = async (page = 1) => {
-  const params: ITMDBRequestParams = { language: "pt-BR", page };
+export const fetchPopularMovies = async (page = 1) => {
+  const params: ITMDBRequestParams = { language: TMDB_LANGUAGE, page };
 
   const data = await apiRequest<ITMDBResponse>(
     "GET",
@@ -21,6 +26,23 @@ export const moviePopular = async (page = 1) => {
     page,
     totalPages: data.total_pages,
   };
+};
+
+export const fetchMovieDetail = async (id: number) => {
+  const params: ITMDBRequestParams = {
+    language: TMDB_LANGUAGE,
+    append_to_response: "credits,videos",
+  };
+
+  const data = await apiRequest<ITMDBMovieDetail>(
+    "GET",
+    `/movie/${id}`,
+    undefined,
+    {
+      params,
+    },
+  );
+  return mapTMDBToMovieDetail(data);
 };
 
 export const fetchMoviesFromAPI = async (params: IFetchMoviesParams) => {
@@ -47,7 +69,7 @@ export const fetchMoviesFromAPI = async (params: IFetchMoviesParams) => {
     : {};
 
   const apiParams: ITMDBRequestParams = {
-    language: "pt-BR",
+    language: TMDB_LANGUAGE,
     page,
     ...(isSearch && { query }),
     ...discoverParams,
