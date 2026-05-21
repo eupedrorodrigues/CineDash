@@ -2,10 +2,12 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { Bookmark, Film, LayoutGrid, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/authStore";
+import { useWatchlistStore } from "@/store/watchlistStore";
 
 const Header = () => {
   const { logout } = useAuthStore();
   const navigate = useNavigate();
+  const count = useWatchlistStore((s) => s.movies.length);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
@@ -35,18 +37,15 @@ const Header = () => {
           >
             <Bookmark className="h-4 w-4" />
             Minha Lista
-            {/* {count > 0 && (
+            {count > 0 && (
               <span className="ml-1 rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
                 {count}
               </span>
-            )} */}
+            )}
           </Link>
         </nav>
 
         <div className="flex items-center gap-3">
-          <span className="hidden text-sm text-muted-foreground sm:block">
-            {/* {user?.email} */}
-          </span>
           <Button
             variant="ghost"
             size="sm"

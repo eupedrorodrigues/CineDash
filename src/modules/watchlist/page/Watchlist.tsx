@@ -1,78 +1,13 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import {
-  Bookmark,
-  ChevronUp,
-  ChevronDown,
-  ChevronsUpDown,
-  Trash2,
-  Eye,
-} from "lucide-react";
+import { Bookmark, Trash2, Eye } from "lucide-react";
 import { useWatchlistStore } from "@/store/watchlistStore";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import type { Movie } from "@/types";
+import { SortableHeader, sortMovies } from "../components/SortableHeader";
+import type { SortDir, SortKey } from "@/types/watchlist";
 
-type SortKey = "title" | "genre" | "rating";
-type SortDir = "asc" | "desc";
-
-interface SortableHeaderProps {
-  label: string;
-  col: SortKey;
-  active: SortKey;
-  dir: SortDir;
-  onSort: (col: SortKey) => void;
-}
-
-function SortIcon({
-  col,
-  active,
-  dir,
-}: {
-  col: SortKey;
-  active: SortKey;
-  dir: SortDir;
-}) {
-  if (col !== active)
-    return <ChevronsUpDown className="h-3.5 w-3.5 opacity-40" />;
-  return dir === "asc" ? (
-    <ChevronUp className="h-3.5 w-3.5 text-primary" />
-  ) : (
-    <ChevronDown className="h-3.5 w-3.5 text-primary" />
-  );
-}
-
-function SortableHeader({
-  label,
-  col,
-  active,
-  dir,
-  onSort,
-}: SortableHeaderProps) {
-  return (
-    <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-      <button
-        onClick={() => onSort(col)}
-        className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
-      >
-        {label}
-        <SortIcon col={col} active={active} dir={dir} />
-      </button>
-    </th>
-  );
-}
-
-function sortMovies(movies: Movie[], key: SortKey, dir: SortDir): Movie[] {
-  return [...movies].sort((a, b) => {
-    const av = key === "rating" ? a[key] : a[key].toLowerCase();
-    const bv = key === "rating" ? b[key] : b[key].toLowerCase();
-    if (av < bv) return dir === "asc" ? -1 : 1;
-    if (av > bv) return dir === "asc" ? 1 : -1;
-    return 0;
-  });
-}
-
-export function Watchlist() {
+const Watchlist = () => {
   const movies = useWatchlistStore((s) => s.movies);
   const toggle = useWatchlistStore((s) => s.toggle);
 
@@ -200,4 +135,6 @@ export function Watchlist() {
       </div>
     </div>
   );
-}
+};
+
+export default Watchlist;
