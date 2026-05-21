@@ -13,12 +13,12 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link to="/dashboard" className="flex items-center gap-2 group">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:px-6">
+        <Link to="/dashboard" className="flex items-center gap-2 group shrink-0">
           <div className="flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-[var(--shadow-gold)]">
             <Film className="h-5 w-5" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">
+          <span className="hidden sm:inline text-lg font-semibold tracking-tight">
             Cine<span className="text-primary">Dash</span>
           </span>
         </Link>
@@ -27,27 +27,27 @@ const Header = () => {
           <Link
             to="/dashboard"
             activeProps={{ className: "bg-secondary text-foreground" }}
-            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            className="flex items-center gap-2 rounded-md px-2 sm:px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
-            <LayoutGrid className="h-4 w-4" />
-            Descoberta
+            <LayoutGrid className="h-4 w-4 shrink-0" />
+            <span className="hidden sm:inline">Descoberta</span>
           </Link>
           <Link
             to="/watchlist"
             activeProps={{ className: "bg-secondary text-foreground" }}
-            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            className="flex items-center gap-2 rounded-md px-2 sm:px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
-            <Bookmark className="h-4 w-4" />
-            Minha Lista
+            <Bookmark className="h-4 w-4 shrink-0" />
+            <span className="hidden sm:inline">Minha Lista</span>
             {count > 0 && (
-              <span className="ml-1 rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
+              <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
                 {count}
               </span>
             )}
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <Button
             variant="ghost"
             size="sm"
@@ -69,7 +69,7 @@ const Header = () => {
             }}
           >
             <LogOut className="h-4 w-4" />
-            Sair
+            <span className="hidden sm:inline">Sair</span>
           </Button>
         </div>
       </div>

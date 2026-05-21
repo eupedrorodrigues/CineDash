@@ -10,24 +10,26 @@ export const createWatchlistColumns = (onRemove: (movie: Movie) => void) => [
   columnHelper.accessor("title", {
     header: "Título",
     cell: ({ getValue, row }) => (
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         <img
           src={row.original.poster}
           alt={getValue()}
-          className="h-12 w-8 rounded object-cover"
+          className="h-10 w-7 shrink-0 rounded object-cover sm:h-12 sm:w-8"
         />
-        <span className="line-clamp-1 font-medium">{getValue()}</span>
+        <span className="line-clamp-2 max-w-[120px] font-medium sm:max-w-none sm:line-clamp-1">{getValue()}</span>
       </div>
     ),
   }),
   columnHelper.accessor("genre", {
     header: "Gênero",
+    meta: { className: "hidden sm:table-cell" },
     cell: ({ getValue }) => (
       <span className="text-muted-foreground">{getValue()}</span>
     ),
   }),
   columnHelper.accessor("year", {
     header: "Ano",
+    meta: { className: "hidden sm:table-cell" },
     cell: ({ getValue }) => (
       <span className="text-muted-foreground">{getValue()}</span>
     ),

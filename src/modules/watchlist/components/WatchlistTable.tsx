@@ -43,7 +43,8 @@ export function WatchlistTable({ movies, onRemove }: Props) {
 
   return (
     <div className="overflow-hidden rounded-xl border border-border/60">
-      <table className="w-full text-sm">
+      <div className="overflow-x-auto">
+      <table className="w-full min-w-[480px] text-sm">
         <thead className="border-b border-border/60 bg-card/60">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -56,8 +57,9 @@ export function WatchlistTable({ movies, onRemove }: Props) {
                   <th
                     key={header.id}
                     className={cn(
-                      "px-4 py-3 text-left font-medium text-muted-foreground",
+                      "px-2 py-3 text-left font-medium text-muted-foreground sm:px-4",
                       align === "right" && "text-right",
+                      header.column.columnDef.meta?.className,
                     )}
                   >
                     {header.isPlaceholder ? null : canSort ? (
@@ -95,8 +97,9 @@ export function WatchlistTable({ movies, onRemove }: Props) {
                   <td
                     key={cell.id}
                     className={cn(
-                      "px-4 py-3",
+                      "px-2 py-3 sm:px-4",
                       align === "right" && "text-right",
+                      cell.column.columnDef.meta?.className,
                     )}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -107,6 +110,7 @@ export function WatchlistTable({ movies, onRemove }: Props) {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
