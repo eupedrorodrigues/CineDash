@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Bookmark, Trash2, Eye } from "lucide-react";
-import { useWatchlistStore } from "@/store/watchlistStore";
+import { useWatchlistStore } from "../store/watchlistStore";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { SortableHeader, sortMovies } from "../components/SortableHeader";

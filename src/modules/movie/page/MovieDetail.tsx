@@ -9,7 +9,7 @@ import {
   User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useWatchlistStore } from "@/store/watchlistStore";
+import { useWatchlistStore } from "@/modules/watchlist/store/watchlistStore";
 import { useMovieDetail } from "../hooks/useMovieDetail";
 import { toast } from "sonner";
 import MovieDetailSkeleton from "@/components/MovieDetailSkeleton/MovieDetailSkeleton";

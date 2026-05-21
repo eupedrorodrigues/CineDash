@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Bookmark, Film, LayoutGrid, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/store/authStore";
-import { useWatchlistStore } from "@/store/watchlistStore";
+import { useAuthStore } from "@/modules/auth/store/authStore";
+import { useWatchlistStore } from "@/modules/watchlist/store/watchlistStore";
 
 const Header = () => {
   const { logout } = useAuthStore();

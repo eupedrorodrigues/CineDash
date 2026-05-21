@@ -1,13 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Movie } from "@/types";
-
-interface WatchlistState {
-  movies: Movie[];
-  toggle: (movie: Movie) => void;
-  has: (id: number) => boolean;
-  clear: () => void;
-}
+import type { WatchlistState } from "@/types";
 
 export const useWatchlistStore = create<WatchlistState>()(
   persist(

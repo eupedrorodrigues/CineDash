@@ -2,9 +2,7 @@ import { useRef, useState } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { useInfiniteMovies } from "../hooks/useInfiniteMovies";
 import { useFilteredMovies } from "../hooks/useFilteredMovies";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import { useDebounce } from "@/hooks/useDebounce";
-import { TMDB_GENRES } from "@/constants";
+import { TMDB_GENRES, YEARS } from "@/constants";
 import { MovieCard } from "@/components/MovieCard/MovieCard";
 import { Loader } from "@/components/Loader/Loader";
 import { Input } from "@/components/ui/input";
@@ -17,13 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-
-const CURRENT_YEAR = new Date().getFullYear();
-const YEARS = Array.from({ length: CURRENT_YEAR - 1989 }, (_, i) =>
-  String(CURRENT_YEAR - i),
-);
-
-const SENTINEL_OPTIONS: IntersectionObserverInit = { rootMargin: "200px" };
+import { useDebounce, useIntersectionObserver } from "@/hooks";
+import { SENTINEL_OPTIONS } from "@/constants";
 
 const Dashboard = () => {
   const [query, setQuery] = useState("");
@@ -39,9 +32,8 @@ const Dashboard = () => {
     year !== "all" ||
     minRating > 0;
 
-  const genreId = genre !== "all"
-    ? TMDB_GENRES.find((g) => g.name === genre)?.id
-    : undefined;
+  const genreId =
+    genre !== "all" ? TMDB_GENRES.find((g) => g.name === genre)?.id : undefined;
 
   const {
     data,
@@ -51,21 +43,23 @@ const Dashboard = () => {
     isFetchingNextPage,
   } = useInfiniteMovies(!hasActiveFilters);
 
-  const { data: filteredData, isLoading: isLoadingFiltered } = useFilteredMovies(
-    {
-      query: debouncedQuery.trim() || undefined,
-      genreId,
-      year: year !== "all" ? year : undefined,
-      minRating: minRating > 0 ? minRating : undefined,
-    },
-    hasActiveFilters,
-  );
+  const { data: filteredData, isLoading: isLoadingFiltered } =
+    useFilteredMovies(
+      {
+        query: debouncedQuery.trim() || undefined,
+        genreId,
+        year: year !== "all" ? year : undefined,
+        minRating: minRating > 0 ? minRating : undefined,
+      },
+      hasActiveFilters,
+    );
 
   const sentinelRef = useRef<HTMLDivElement>(null);
   useIntersectionObserver(
     sentinelRef,
     () => {
-      if (!hasActiveFilters && hasNextPage && !isFetchingNextPage) fetchNextPage();
+      if (!hasActiveFilters && hasNextPage && !isFetchingNextPage)
+        fetchNextPage();
     },
     SENTINEL_OPTIONS,
   );
@@ -92,10 +86,13 @@ const Dashboard = () => {
   return (
     <main className="mx-auto max-w-7xl px-6 py-10">
       <div className="mb-8 flex flex-col gap-2">
-        <p className="text-xs uppercase tracking-[0.2em] text-primary">Curadoria</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-primary">
+          Curadoria
+        </p>
         <h1 className="text-4xl font-semibold tracking-tight">Descoberta</h1>
         <p className="text-sm text-muted-foreground">
-          Explore o catálogo, refine por gênero, ano e nota mínima, e construa sua estante.
+          Explore o catálogo, refine por gênero, ano e nota mínima, e construa
+          sua estante.
         </p>
       </div>
 
@@ -143,7 +140,9 @@ const Dashboard = () => {
           <div className="flex-1">
             <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
               <span>Nota mínima</span>
-              <span className="font-mono text-primary">{minRating.toFixed(1)}</span>
+              <span className="font-mono text-primary">
+                {minRating.toFixed(1)}
+              </span>
             </div>
             <Slider
               value={[minRating]}
@@ -171,13 +170,16 @@ const Dashboard = () => {
             Mostrando <span className="text-foreground">{movies.length}</span>
             {totalResults !== undefined && (
               <>
-                {" "}de <span className="text-foreground">{totalResults}</span>
+                {" "}
+                de <span className="text-foreground">{totalResults}</span>
               </>
             )}{" "}
             filmes
           </span>
           {activeFiltersCount > 0 && (
-            <span className="text-primary">{activeFiltersCount} filtro(s) ativo(s)</span>
+            <span className="text-primary">
+              {activeFiltersCount} filtro(s) ativo(s)
+            </span>
           )}
         </div>
       )}
@@ -185,7 +187,10 @@ const Dashboard = () => {
       {isLoading ? (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i} className="aspect-[2/3] animate-pulse rounded-lg bg-muted" />
+            <div
+              key={i}
+              className="aspect-[2/3] animate-pulse rounded-lg bg-muted"
+            />
           ))}
         </div>
       ) : movies.length === 0 ? (

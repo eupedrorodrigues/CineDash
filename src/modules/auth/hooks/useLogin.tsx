@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 import { authLogin } from "@/services/auth";
 import type { ILoginCredentials } from "@/types";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "../store/authStore";
 
 export const useLogin = () => {
   const navigate = useNavigate();

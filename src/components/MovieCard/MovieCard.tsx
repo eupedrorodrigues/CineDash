@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Star, Bookmark, BookmarkCheck } from "lucide-react";
-import { useWatchlistStore } from "@/store/watchlistStore";
+import { useWatchlistStore } from "@/modules/watchlist/store/watchlistStore";
 import type { Movie } from "@/types";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
