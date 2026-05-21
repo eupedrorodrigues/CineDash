@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { useInfiniteMovies } from "../hooks/useInfiniteMovies";
 import { useFilteredMovies } from "../hooks/useFilteredMovies";
+import { useDashboardFilters } from "../hooks/useDashboardFilters";
 import { TMDB_GENRES, YEARS } from "@/constants";
 import { MovieCard } from "@/components/MovieCard/MovieCard";
 import { Loader } from "@/components/Loader/Loader";
@@ -15,25 +16,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { useDebounce, useIntersectionObserver } from "@/hooks";
+import { useIntersectionObserver } from "@/hooks";
 import { SENTINEL_OPTIONS } from "@/constants";
+import { useWatchlistStore } from "@/modules/watchlist/store/watchlistStore";
 
 const Dashboard = () => {
-  const [query, setQuery] = useState("");
-  const [genre, setGenre] = useState("all");
-  const [year, setYear] = useState("all");
-  const [minRating, setMinRating] = useState(0);
+  const {
+    query,
+    setQuery,
+    genre,
+    setGenre,
+    year,
+    setYear,
+    minRating,
+    setMinRating,
+    debouncedQuery,
+    hasActiveFilters,
+    genreId,
+    activeFiltersCount,
+    clearFilters,
+  } = useDashboardFilters();
 
-  const debouncedQuery = useDebounce(query, 350);
-
-  const hasActiveFilters =
-    Boolean(debouncedQuery.trim()) ||
-    genre !== "all" ||
-    year !== "all" ||
-    minRating > 0;
-
-  const genreId =
-    genre !== "all" ? TMDB_GENRES.find((g) => g.name === genre)?.id : undefined;
+  const watchlistMovies = useWatchlistStore((s) => s.movies);
+  const toggleWatchlist = useWatchlistStore((s) => s.toggle);
 
   const {
     data,
@@ -70,18 +75,6 @@ const Dashboard = () => {
   const movies = hasActiveFilters ? filteredMovies : popularMovies;
   const isLoading = hasActiveFilters ? isLoadingFiltered : isLoadingPopular;
   const totalResults = filteredData?.totalResults;
-
-  const activeFiltersCount =
-    (genre !== "all" ? 1 : 0) +
-    (year !== "all" ? 1 : 0) +
-    (minRating > 0 ? 1 : 0);
-
-  const clearFilters = () => {
-    setQuery("");
-    setGenre("all");
-    setYear("all");
-    setMinRating(0);
-  };
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-10">
@@ -203,7 +196,12 @@ const Dashboard = () => {
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {movies.map((m) => (
-            <MovieCard key={m.id} movie={m} />
+            <MovieCard
+              key={m.id}
+              movie={m}
+              inList={watchlistMovies.some((wm) => wm.id === m.id)}
+              onToggle={toggleWatchlist}
+            />
           ))}
         </div>
       )}

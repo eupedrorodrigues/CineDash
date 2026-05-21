@@ -1,13 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { Star, Bookmark, BookmarkCheck } from "lucide-react";
-import { useWatchlistStore } from "@/modules/watchlist/store/watchlistStore";
 import type { Movie } from "@/types";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 
-export function MovieCard({ movie }: { movie: Movie }) {
-  const inList = useWatchlistStore((s) => s.movies.some((m) => m.id === movie.id));
-  const toggle = useWatchlistStore((s) => s.toggle);
+interface MovieCardProps {
+  movie: Movie;
+  inList: boolean;
+  onToggle: (movie: Movie) => void;
+}
+
+export function MovieCard({ movie, inList, onToggle }: MovieCardProps) {
 
   return (
     <Card className="group relative overflow-hidden rounded-lg border border-border/60 bg-card transition-all hover:border-primary/40 hover:shadow-[var(--shadow-gold)]">
@@ -38,7 +41,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
       <button
         onClick={(e) => {
           e.preventDefault();
-          toggle(movie);
+          onToggle(movie);
           toast.success(inList ? "Removido da sua lista" : "Adicionado à sua lista");
         }}
         className="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-background/80 text-foreground backdrop-blur transition-colors hover:bg-primary hover:text-primary-foreground"
