@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "./schemas";
-import type { loginFormInputsProps } from "./types";
+import type { LoginFormInputs } from "./types";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,9 +18,8 @@ import { Loader } from "@/components/Loader/Loader";
 import { useLogin } from "../../hooks/useLogin";
 
 export const LoginForm = () => {
-  const schema = loginSchema();
-  const form = useForm<loginFormInputsProps>({
-    resolver: zodResolver(schema),
+  const form = useForm<LoginFormInputs>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       username: "",
       password: "",
@@ -28,13 +27,13 @@ export const LoginForm = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const { mutate: login, isPending, error } = useLogin();
+  const { mutate: login, isPending } = useLogin();
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleFormLogin = (data: loginFormInputsProps) => {
+  const handleFormLogin = (data: LoginFormInputs) => {
     login({ email: data.username, password: data.password });
   };
 
@@ -122,12 +121,6 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
-
-        {error && (
-          <p className="text-xs text-center text-destructive pt-1">
-            {error.message}
-          </p>
-        )}
 
         <Button
           className="w-full cursor-pointer"
