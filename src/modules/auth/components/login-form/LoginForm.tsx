@@ -129,13 +129,18 @@ export const LoginForm = () => {
           </p>
         )}
 
-        <Button className="w-full" size="lg" disabled={isPending} type="submit">
+        <Button
+          className="w-full cursor-pointer"
+          size="lg"
+          disabled={isPending}
+          type="submit"
+        >
           {isPending ? <Loader className="h-4 w-4 animate-spin mr-2" /> : null}
           Entrar
         </Button>
 
         <p className="text-center text-xs text-muted-foreground">
-          Demo · qualquer email válido e senha 7+ caracteres
+          Demo · processo Inbazz
         </p>
       </form>
     </Form>
