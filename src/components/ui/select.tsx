@@ -65,7 +65,12 @@ export function SelectTrigger({
       )}
     >
       {children}
-      <ChevronDown className="h-4 w-4 text-muted-foreground opacity-50 ml-2" />
+      <ChevronDown
+        className={cn(
+          "ml-2 h-4 w-4 shrink-0 text-muted-foreground opacity-50 transition-transform duration-200",
+          ctx.open && "rotate-180 opacity-80",
+        )}
+      />
     </button>
   );
 }
@@ -84,11 +89,42 @@ export function SelectContent({ children }: { children: React.ReactNode }) {
   const ctx = React.useContext(SelectContext);
   if (!ctx) throw new Error("SelectContent must be used inside Select");
 
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [showTopFade, setShowTopFade] = React.useState(false);
+  const [showBottomFade, setShowBottomFade] = React.useState(false);
+
+  const updateFades = React.useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setShowTopFade(el.scrollTop > 4);
+    setShowBottomFade(el.scrollTop + el.clientHeight < el.scrollHeight - 4);
+  }, []);
+
+  React.useEffect(() => {
+    // rAF garante que o DOM foi pintado e scrollHeight está correto
+    const id = requestAnimationFrame(updateFades);
+    return () => cancelAnimationFrame(id);
+  }, [updateFades]);
+
   if (!ctx.open) return null;
 
   return (
-    <div className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-border/60 bg-popover text-popover-foreground shadow-md focus:outline-none">
-      <div className="p-1">{children}</div>
+    <div className="select-content absolute z-50 mt-1 w-full overflow-hidden rounded-md border border-border/60 bg-popover text-popover-foreground shadow-lg">
+      {showTopFade && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-popover to-transparent" />
+      )}
+
+      <div
+        ref={scrollRef}
+        className="select-scroll max-h-60 overflow-y-auto overscroll-contain p-1"
+        onScroll={updateFades}
+      >
+        {children}
+      </div>
+
+      {showBottomFade && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-popover to-transparent" />
+      )}
     </div>
   );
 }

@@ -9,18 +9,18 @@ import {
   User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useWatchlistStore } from "@/store/watchlistStore";
 import { useMovieDetail } from "../hooks/useMovieDetail";
 import { toast } from "sonner";
+import MovieDetailSkeleton from "@/components/MovieDetailSkeleton/MovieDetailSkeleton";
 
 interface Props {
   id: number;
 }
 
-export function MovieDetail({ id }: Props) {
+const MovieDetail = ({ id }: Props) => {
   const { data: movie, isLoading, isError } = useMovieDetail(id);
-  const inList = useWatchlistStore((s) => s.movies.some((m) => m.id === id));
+  const inList = useWatchlistStore((s) => s.has(id));
   const toggle = useWatchlistStore((s) => s.toggle);
 
   if (isLoading) return <MovieDetailSkeleton />;
@@ -112,12 +112,12 @@ export function MovieDetail({ id }: Props) {
             >
               {inList ? (
                 <>
-                  <BookmarkCheck className="h-4 w-4 cursor-pointer" />
+                  <BookmarkCheck className="h-4 w-4" />
                   Na sua lista
                 </>
               ) : (
                 <>
-                  <Bookmark className="h-4 w-4 cursor-pointer" />
+                  <Bookmark className="h-4 w-4" />
                   Adicionar à lista
                 </>
               )}
@@ -174,34 +174,6 @@ export function MovieDetail({ id }: Props) {
       </main>
     </div>
   );
-}
+};
 
-function MovieDetailSkeleton() {
-  return (
-    <div>
-      <Skeleton className="h-[420px] w-full rounded-none" />
-      <div className="mx-auto -mt-64 max-w-7xl px-6 pb-16">
-        <Skeleton className="mb-6 h-8 w-20" />
-        <div className="grid gap-10 lg:grid-cols-[300px_1fr]">
-          <Skeleton className="aspect-[2/3] w-full rounded-xl" />
-          <div className="space-y-4 pt-2">
-            <Skeleton className="h-3 w-24" />
-            <Skeleton className="h-10 w-3/4" />
-            <div className="flex gap-4">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton key={i} className="h-4 w-16" />
-              ))}
-            </div>
-            <Skeleton className="h-10 w-40" />
-            <div className="space-y-2 pt-2">
-              <Skeleton className="h-3 w-20" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-              <Skeleton className="h-4 w-4/6" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+export default MovieDetail;

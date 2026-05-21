@@ -29,19 +29,12 @@ export const fetchPopularMovies = async (page = 1) => {
 };
 
 export const fetchMovieDetail = async (id: number) => {
-  const params: ITMDBRequestParams = {
-    language: TMDB_LANGUAGE,
-    append_to_response: "credits,videos",
-  };
-
-  const data = await apiRequest<ITMDBMovieDetail>(
-    "GET",
-    `/movie/${id}`,
-    undefined,
-    {
-      params,
+  const data = await apiRequest<ITMDBMovieDetail>("GET", `/movie/${id}`, undefined, {
+    params: {
+      language: TMDB_LANGUAGE,
+      append_to_response: "credits,videos",
     },
-  );
+  });
   return mapTMDBToMovieDetail(data);
 };
 

@@ -28,6 +28,10 @@ export const YOUTUBE_EMBED_BASE_URL = import.meta.env
 export const POSTER_FALLBACK_URL = import.meta.env.VITE_POSTER_FALLBACK_URL;
 export const TMDB_LANGUAGE = "pt-BR";
 
+export const TMDB_GENRES = Object.entries(TMDB_REVERSE_GENRE_MAP)
+  .map(([id, name]) => ({ id: Number(id), name }))
+  .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+
 const parseYear = (releaseDate: string): number =>
   releaseDate ? Number(releaseDate.split("-")[0]) || 0 : 0;
 
