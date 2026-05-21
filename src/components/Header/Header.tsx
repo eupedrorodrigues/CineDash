@@ -1,13 +1,15 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Bookmark, Film, LayoutGrid, LogOut } from "lucide-react";
+import { Bookmark, Film, LayoutGrid, LogOut, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/modules/auth/store/authStore";
 import { useWatchlistStore } from "@/modules/watchlist/store/watchlistStore";
+import { useThemeStore } from "@/store/themeStore";
 
 const Header = () => {
   const { logout } = useAuthStore();
   const navigate = useNavigate();
   const count = useWatchlistStore((s) => s.movies.length);
+  const { theme, toggleTheme } = useThemeStore();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
@@ -45,7 +47,19 @@ const Header = () => {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
+          </Button>
           <Button
             variant="ghost"
             size="sm"

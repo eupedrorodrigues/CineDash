@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 
 import { authLogin } from "@/services/auth";
 import type { ILoginCredentials } from "@/types";
@@ -13,10 +14,11 @@ export const useLogin = () => {
     mutationFn: (credentials: ILoginCredentials) => authLogin(credentials),
     onSuccess: ({ token }) => {
       login(token);
+      toast.success("Login realizado com sucesso!");
       navigate({ to: "/dashboard" });
     },
     onError: (error: Error) => {
-      console.error(error);
+      toast.error(error.message || "Credenciais inválidas. Tente novamente.");
     },
   });
 };
