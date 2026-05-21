@@ -1,6 +1,6 @@
 import { ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 import type { Movie } from "@/types";
-import type { SortableHeaderProps, SortDir, SortKey } from "@/types/watchlist";
+import type { SortableHeaderProps, SortDir, SortKey } from "@/types";
 
 const SortIcon = ({
   col,
