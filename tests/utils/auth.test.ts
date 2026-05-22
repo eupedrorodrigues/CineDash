@@ -11,14 +11,14 @@ describe("validateToken", () => {
     expect(validateToken(makeToken(0))).toBe(true);
   });
 
-  it("retorna true para token gerado há 23h (dentro do prazo)", () => {
-    const twentyThreeHours = -23 * 60 * 60 * 1000;
-    expect(validateToken(makeToken(twentyThreeHours))).toBe(true);
+  it("retorna true para token gerado há 59min (dentro do prazo)", () => {
+    const fiftyNineMinutes = -59 * 60 * 1000;
+    expect(validateToken(makeToken(fiftyNineMinutes))).toBe(true);
   });
 
-  it("retorna false para token expirado (mais de 24h)", () => {
-    const twentyFiveHours = -25 * 60 * 60 * 1000;
-    expect(validateToken(makeToken(twentyFiveHours))).toBe(false);
+  it("retorna false para token expirado (mais de 1h)", () => {
+    const twoHours = -2 * 60 * 60 * 1000;
+    expect(validateToken(makeToken(twoHours))).toBe(false);
   });
 
   it("retorna false para string vazia", () => {
@@ -43,9 +43,9 @@ describe("validateToken", () => {
     vi.restoreAllMocks();
   });
 
-  it("retorna false para token exatamente no limite de 24h (boundary exclusivo)", () => {
-    const exactly24h = -24 * 60 * 60 * 1000;
-    expect(validateToken(makeToken(exactly24h))).toBe(false);
+  it("retorna false para token exatamente no limite de 1h (boundary exclusivo)", () => {
+    const exactly1h = -60 * 60 * 1000;
+    expect(validateToken(makeToken(exactly1h))).toBe(false);
   });
 
   it("retorna false para token sem separador ':'", () => {

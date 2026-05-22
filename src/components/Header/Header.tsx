@@ -14,7 +14,10 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:px-6">
-        <Link to="/dashboard" className="flex items-center gap-2 group shrink-0">
+        <Link
+          to="/dashboard"
+          className="flex items-center gap-2 group shrink-0"
+        >
           <div className="flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-[var(--shadow-gold)]">
             <Film className="h-5 w-5" />
           </div>
@@ -52,7 +55,10 @@ const Header = () => {
             variant="ghost"
             size="sm"
             onClick={toggleTheme}
-            aria-label={theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"}
+            aria-label={
+              theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"
+            }
+            className="cursor-pointer"
           >
             {theme === "dark" ? (
               <Sun className="h-4 w-4" />

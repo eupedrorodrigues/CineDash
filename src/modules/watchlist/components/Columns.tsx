@@ -16,7 +16,9 @@ export const createWatchlistColumns = (onRemove: (movie: Movie) => void) => [
           alt={getValue()}
           className="h-10 w-7 shrink-0 rounded object-cover sm:h-12 sm:w-8"
         />
-        <span className="line-clamp-2 max-w-[120px] font-medium sm:max-w-none sm:line-clamp-1">{getValue()}</span>
+        <span className="line-clamp-2 max-w-[120px] font-medium sm:max-w-none sm:line-clamp-1">
+          {getValue()}
+        </span>
       </div>
     ),
   }),
@@ -57,7 +59,7 @@ export const createWatchlistColumns = (onRemove: (movie: Movie) => void) => [
           variant="ghost"
           size="sm"
           onClick={() => onRemove(row.original)}
-          className="text-destructive hover:text-destructive"
+          className="text-destructive hover:text-destructive cursor-pointer"
         >
           <Trash2 className="h-4 w-4" />
         </Button>

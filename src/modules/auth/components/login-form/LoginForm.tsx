@@ -106,7 +106,7 @@ export const LoginForm = () => {
                   <button
                     onClick={handleTogglePasswordVisibility}
                     type="button"
-                    className="absolute right-0 top-0 flex h-full items-center justify-center px-3 text-muted-foreground hover:text-foreground focus:outline-none"
+                    className="absolute right-0 cursor-pointer top-0 flex h-full items-center justify-center px-3 text-muted-foreground hover:text-foreground focus:outline-none"
                     tabIndex={-1}
                   >
                     {showPassword ? (

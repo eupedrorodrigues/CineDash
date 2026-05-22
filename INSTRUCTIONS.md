@@ -75,7 +75,7 @@ Email: usuario@exemplo.com
 Senha: minhasenha123
 ```
 
-A sessão expira após 24 horas e é persistida no `localStorage`.
+A sessão expira após 1 hora e é persistida no `localStorage`.
 
 ---
 

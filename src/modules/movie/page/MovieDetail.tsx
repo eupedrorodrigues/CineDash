@@ -109,6 +109,7 @@ const MovieDetail = ({ id }: Props) => {
                   inList ? "Removido da sua lista" : "Adicionado à sua lista",
                 );
               }}
+              className="cursor-pointer"
             >
               {inList ? (
                 <>

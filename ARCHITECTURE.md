@@ -64,7 +64,7 @@ O projeto não possui servidor próprio. A autenticação é simulada em `src/se
 
 1. **Login simulado** — `authLogin` valida presença de e-mail e senha com mais de 6 caracteres, introduz um delay de 800 ms para simular latência de rede, e retorna um token gerado localmente via `btoa(email + ":" + Date.now())`.
 
-2. **Token com TTL** — `src/utils/auth.ts` decodifica o token com `atob` e valida que o timestamp embutido não ultrapassa 24 horas. Tokens expirados causam logout automático.
+2. **Token com TTL** — `src/utils/auth.ts` decodifica o token com `atob` e valida que o timestamp embutido não ultrapassa 1 hora. Tokens expirados causam logout automático.
 
 3. **Persistência** — O store Zustand usa o middleware `persist`, gravando `{ token, isAuthenticated }` na chave `cinedash-auth` do `localStorage`. A sessão sobrevive a recarregamentos de página sem chamada de rede.
 
